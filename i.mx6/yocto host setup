@@ -1,0 +1,42 @@
+3 Host Setup
+To get the Yocto Project expected behavior in a Linux Host Machine, the packages and utilities described below must be
+installed. An important consideration is the hard disk space required in the host machine. For example, when building on a
+machine running Ubuntu, the minimum hard disk space required is about 50 GB for the X11 backend. It is recommended that
+at least 120 GB is provided, which is enough to compile all backends together.
+The recommended minimum Ubuntu version is 14.04 but builds for Jethro works on 12.04 or later. Earlier versions may
+cause the Yocto Project build setup to fail, because it requires python versions only available starting wtih Ubuntu 12.04. 
+See The Yocto Project reference manual for more information.
+Ubuntu 16.04 users have commented on errors during build for SDL. To fix this comment out in local.conf the following
+lines as such adding # character
+#PACKAGECONFIG_append_pn-qemu-native = " sdl"
+#PACKAGECONFIG_append_pn-nativesdk-qemu = " sdl"
+
+3.1 Host packages
+A Yocto Project build requires that some packages be installed for the build that are documented under the Yocto Project. Go
+to Yocto Project Quick Start and check for the packages that must be installed for your build machine.
+
+Essential Yocto Project host packages are:
+$ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib \
+build-essential chrpath socat libsdl1.2-dev
+i.MX layers host packages for a Ubuntu 12.04 or 14.04 host setup are:
+$ sudo apt-get install libsdl1.2-dev xterm sed cvs subversion coreutils texi2html \
+docbook-utils python-pysqlite2 help2man make gcc g++ desktop-file-utils \
+libgl1-mesa-dev libglu1-mesa-dev mercurial autoconf automake groff curl lzop asciidoc
+i.MX layers host packages for a Ubuntu 12.04 host setup only are:
+$ sudo apt-get install uboot-mkimage
+i.MX layers host packages for a Ubuntu 14.04 host setup only are:
+$ sudo apt-get install u-boot-tools
+The configuration tool uses the default version of grep that is on your build machine. If there is a different version of grep in
+your path, it may cause builds to fail. One workaround is to rename the special version to something not containing "grep".
+
+3.2 Setting up the repo utility
+Repo is a tool built on top of Git that makes it easier to manage projects that contain multiple repositories, which do not need
+to be on the same server. Repo complements very well the layered nature of the Yocto Project, making it easier for users to
+add their own layers to the BSP.
+To install the “repo” utility, perform these steps:
+1. Create a bin folder in the home directory.
+$ mkdir ~/bin (this step may not be needed if the bin folder already exists)
+$ curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+$ chmod a+x ~/bin/repo
+2. Add the following line to the .bashrc file to ensure that the ~/bin folder is in your PATH variable.
+export PATH=~/bin:$PATH
