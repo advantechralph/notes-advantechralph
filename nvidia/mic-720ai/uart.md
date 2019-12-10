@@ -17,3 +17,9 @@
 |Pin 1 (GND)|Black (GND)|
 |Pin 4 (RX)|Green (TX)|
 |Pin 5 (TX)|White (RX)|
+
+---
+
+### uart -> com port 
+
+- TI MAX3243 tranceiver
